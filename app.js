@@ -1,21 +1,17 @@
-// Pobranie faker z window
-const { faker } = window;
-if (!faker) throw new Error('Faker nie został załadowany');
+document.addEventListener('DOMContentLoaded', () => {
+  const { faker } = window;
+  if (!faker) {
+    alert('Faker nie został załadowany');
+    return;
+  }
 
-// ======= UTIL =======
-const $ = sel => document.querySelector(sel);
-const $$ = sel => Array.from(document.querySelectorAll(sel));
-const toast = msg => {
-  const el = $('#toast');
-  el.textContent = msg;
-  el.style.display = 'block';
-  setTimeout(() => el.style.display = 'none', 1800);
-};
-
-// ======= MOTYW =======
-$('#themeToggle').addEventListener('change', e => {
-  document.body.dataset.theme = e.target.checked ? 'light' : 'dark';
-});
+  const $ = sel => document.querySelector(sel);
+  const $$ = sel => Array.from(document.querySelectorAll(sel));
+  
+  // teraz można podpiąć wszystkie event listener'y
+  $('#themeToggle').addEventListener('change', e => {
+    document.body.dataset.theme = e.target.checked ? 'light' : 'dark';
+  });
 
 // ======= TRYB BEZPIECZNY =======
 let safeMode = true;
@@ -100,3 +96,4 @@ $('#csvBtn').addEventListener('click', () => {
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'dane_testowe.csv'; a.click();
 });
+
