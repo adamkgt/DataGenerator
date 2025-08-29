@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const { faker } = window;
-  if (!faker) {
-    alert('Faker nie załadowany');
+  const fakerInstance = window.faker;
+  if (!fakerInstance) {
+    alert('Faker nie został załadowany');
     return;
   }
 
@@ -25,33 +25,29 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
   // ======= GENEROWANIE DANYCH =======
-  function genFullName() { return faker.person.fullName(); }
-  function genEmail(name) {
-    if (safeMode) {
-      const parts = name.toLowerCase().split(' ');
-      return `${parts[0]}.${parts[1] || 'user'}@example.com`;
+  function generateRow(cols) {
+    const row = {};
+    if (cols.name) row.name = fakerInstance.person.firstName() + ' ' + fakerInstance.person.lastName();
+    if (cols.email) {
+      if (safeMode) {
+        const parts = row.name.toLowerCase().split(' ');
+        row.email = `${parts[0]}.${parts[1] || 'user'}@example.com`;
+      } else {
+        row.email = fakerInstance.internet.email();
+      }
     }
-    return faker.internet.email();
+    if (cols.phone) {
+      row.phone = safeMode
+        ? `6${Math.floor(Math.random()*100000000).toString().padStart(8,'0')}`
+        : fakerInstance.phone.number('###-###-###');
+    }
+    if (cols.pesel) {
+      row.pesel = safeMode
+        ? Math.floor(Math.random()*1e11).toString().padStart(11,'0')
+        : Math.floor(Math.random()*1e11).toString().padStart(11,'0');
+    }
+    return row;
   }
-  function genPhonePL() {
-    return safeMode
-      ? `6${Math.floor(Math.random()*100000000).toString().padStart(8,'0')}`
-      : faker.phone.number('### ### ###');
-  }
-  function genPesel() {
-    return safeMode
-      ? Math.floor(Math.random()*1e11).toString().padStart(11,'0')
-      : Math.floor(Math.random()*1e11).toString().padStart(11,'0');
-  }
-
-function generateRow(cols) {
-  const row = {};
-  if (cols.name) row.name = window.faker.person.firstName() + ' ' + window.faker.person.lastName();
-  if (cols.email) row.email = window.faker.internet.email();
-  if (cols.phone) row.phone = window.faker.phone.number('###-###-###');
-  if (cols.pesel) row.pesel = Math.floor(Math.random()*1e11).toString().padStart(11,'0');
-  return row;
-}
 
   function generateData(n, cols) {
     return Array.from({length:n}, () => generateRow(cols));
@@ -116,4 +112,3 @@ function generateRow(cols) {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='dane_testowe.csv'; a.click();
   });
 });
-
