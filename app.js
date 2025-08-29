@@ -1,9 +1,11 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const { faker } = window;
-  if (!faker) {
-    alert('Faker nie załadowany!');
+// ======= Poczekaj na Faker =======
+function initApp() {
+  if (!window.faker) {
+    setTimeout(initApp, 50); // sprawdzaj co 50ms
     return;
   }
+
+  const { faker } = window;
 
   // ======= UTIL =======
   const $ = sel => document.querySelector(sel);
@@ -21,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ======= TRYB BEZPIECZNY =======
-  let safeMode = $('#safeToggle').checked;
+  let safeMode = true;
   $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
   // ======= GENERATORY =======
@@ -33,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (safeMode) {
       const parts = fullName.toLowerCase().split(' ');
       const base = [parts[0]?.[0] || 'u', parts[1] || 'user'].join('.');
-      const domains = ['example.com','example.org','example.net'];
-      const domain = domains[Math.floor(Math.random()*domains.length)];
+      const domain = ['example.com','example.org','example.net'][Math.floor(Math.random()*3)];
       return `${base}${Math.floor(Math.random()*90+10)}@${domain}`;
     } else {
       return faker.internet.email();
@@ -42,52 +43,52 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function genPhonePL() {
-    const block = safeMode ? Math.floor(Math.random()*200)+600 : Math.floor(Math.random()*900)+100;
-    const rest = String(Math.floor(Math.random()*1_000_000)).padStart(6,'0');
-    const raw = `${block}${rest}`;
-    return raw.replace(/(\d{3})(\d{3})(\d{3})/,'$1 $2 $3');
+    if (safeMode) {
+      const prefix = Math.floor(Math.random()*200)+600;
+      const rest = String(Math.floor(Math.random()*1_000_000)).padStart(6,'0');
+      return `${prefix}${rest}`.replace(/(\d{3})(\d{3})(\d{3})/,'$1 $2 $3');
+    } else {
+      return faker.phone.number('+48 ### ### ###');
+    }
   }
 
   function genPeselSafeInvalid() {
     const start = new Date(1970,0,1).getTime();
-    const end = new Date(2009,11,31).getTime();
+    const end   = new Date(2009,11,31).getTime();
     const d = new Date(start + Math.random()*(end-start));
-    let year = d.getFullYear();
-    let month = d.getMonth()+1;
-    let day = d.getDate();
-    let m = month + (year>=2000?20:0);
-    const yy = String(year).slice(-2).padStart(2,'0');
-    const mm = String(m).padStart(2,'0');
+    let y = d.getFullYear(), m = d.getMonth()+1, day = d.getDate();
+    let mm = m + (y>=2000?20:0);
+    const yy = String(y).slice(-2).padStart(2,'0');
     const dd = String(day).padStart(2,'0');
     const serial = String(Math.floor(Math.random()*1000)).padStart(3,'0');
-    const sex = Math.random()<0.5 ? 0 : 1;
+    const sex = Math.random()<0.5?0:1;
     const base = `${yy}${mm}${dd}${serial}${sex}`;
     const weights = [1,3,7,9,1,3,7,9,1,3];
-    const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i], 0);
-    const correct = (10 - (s % 10)) % 10;
-    const bad = (correct + 1) % 10;
-    return base + bad;
+    const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i],0);
+    const control = (10-(s%10))%10;
+    const bad = (control+1)%10;
+    return base+bad;
   }
 
   function genPeselValid() {
     const start = new Date(1970,0,1).getTime();
-    const end = new Date(2009,11,31).getTime();
+    const end   = new Date(2009,11,31).getTime();
     const d = new Date(start + Math.random()*(end-start));
-    let year = d.getFullYear();
-    let month = d.getMonth()+1;
-    let day = d.getDate();
-    let m = month + (year>=2000?20:0);
-    const yy = String(year).slice(-2).padStart(2,'0');
-    const mm = String(m).padStart(2,'0');
+    let y = d.getFullYear(), m = d.getMonth()+1, day = d.getDate();
+    let mm = m + (y>=2000?20:0);
+    const yy = String(y).slice(-2).padStart(2,'0');
     const dd = String(day).padStart(2,'0');
     const serial = String(Math.floor(Math.random()*1000)).padStart(3,'0');
-    const sex = Math.random()<0.5 ? 0 : 1;
+    const sex = Math.random()<0.5?0:1;
     const base = `${yy}${mm}${dd}${serial}${sex}`;
     const weights = [1,3,7,9,1,3,7,9,1,3];
-    const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i], 0);
-    const control = (10 - (s % 10)) % 10;
-    return base + control;
+    const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i],0);
+    const control = (10-(s%10))%10;
+    return base+control;
   }
+
+  // ======= GENERUJ DANE =======
+  let currentData = [];
 
   function generateRow(cols) {
     const name = genFullName();
@@ -100,73 +101,65 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function generateData(n, cols) {
-    return Array.from({ length: n }, () => generateRow(cols));
+    return Array.from({length:n},()=>generateRow(cols));
   }
 
   // ======= TABELA =======
-  let currentData = [];
-  let sortKey = null;
-  let sortAsc = true;
+  function renderTable(data, cols) {
+    const thead = $('#thead');
+    const tbody = $('#tbody');
+    const headers = Object.keys(cols).filter(k=>cols[k]);
+    thead.innerHTML = `<tr>${headers.map(h=>`<th data-key="${h}">${h}</th>`).join('')}</tr>`;
+    if (!data.length) {
+      tbody.innerHTML = `<tr><td colspan="${headers.length}" class="empty">Brak danych</td></tr>`;
+      $('#rowsCount').textContent='0 rekordów';
+      return;
+    }
+    tbody.innerHTML = data.map(r=>`<tr>${headers.map(h=>`<td>${r[h]}</td>`).join('')}</tr>`).join('');
+    $('#rowsCount').textContent = `${data.length} rekordów`;
 
-  function currentColumns() {
-    return {
+    // sortowanie po kliknięciu nagłówka
+    $$('#thead th').forEach(th=>{
+      th.addEventListener('click',()=>{
+        const key = th.dataset.key;
+        currentData.sort((a,b)=>(a[key]>b[key]?1:-1));
+        renderTable(currentData, cols);
+      });
+    });
+  }
+
+  // ======= EVENTY =======
+  $('#generate').addEventListener('click',()=>{
+    const n = Math.min(50, Math.max(1, parseInt($('#count').value,10)||1));
+    const cols = {
       name: $('#colName').checked,
       email: $('#colEmail').checked,
       phone: $('#colPhone').checked,
       pesel: $('#colPesel').checked
     };
-  }
-
-  function renderTable(data, cols) {
-    const thead = $('#thead');
-    const tbody = $('#tbody');
-    const headers = Object.keys(cols).filter(k => cols[k]);
-    thead.innerHTML = `<tr>${headers.map(h => `<th data-key="${h}">${h}</th>`).join('')}</tr>`;
-
-    if (!data.length) {
-      tbody.innerHTML = `<tr><td colspan="${headers.length}" class="empty">Brak danych</td></tr>`;
-      $('#rowsCount').textContent = '0 rekordów';
-      return;
-    }
-
-    tbody.innerHTML = data.map(r => `<tr>${headers.map(h => `<td>${r[h]}</td>`).join('')}</tr>`).join('');
-    $('#rowsCount').textContent = data.length + ' rekordów';
-
-    // Sortowanie
-    $$('#thead th').forEach(th => th.addEventListener('click', () => {
-      const key = th.dataset.key;
-      if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
-      const sorted = [...currentData].sort((a,b) => (a[key] > b[key] ? 1 : -1) * (sortAsc ? 1 : -1));
-      renderTable(sorted, cols);
-    }));
-  }
-
-  // ======= GENERUJ =======
-  $('#generate').addEventListener('click', () => {
-    const n = Math.min(50, Math.max(1, parseInt($('#count').value,10)||1));
-    const cols = currentColumns();
     currentData = generateData(n, cols);
     renderTable(currentData, cols);
     toast(`Wygenerowano ${n} rekordów`);
   });
 
-  // ======= KOPIUJ =======
-  $('#copyBtn').addEventListener('click', () => {
+  $('#copyBtn').addEventListener('click',()=>{
     if (!currentData.length) { toast('Brak danych do skopiowania'); return; }
     const headers = Object.keys(currentData[0]);
-    const text = [headers.join('\t'), ...currentData.map(r => headers.map(h => r[h]).join('\t'))].join('\n');
-    navigator.clipboard.writeText(text).then(() => toast('Skopiowano do schowka'));
+    const text = [headers.join('\t'), ...currentData.map(r=>headers.map(h=>r[h]).join('\t'))].join('\n');
+    navigator.clipboard.writeText(text).then(()=>toast('Skopiowano do schowka'));
   });
 
-  // ======= CSV =======
-  $('#csvBtn').addEventListener('click', () => {
+  $('#csvBtn').addEventListener('click',()=>{
     if (!currentData.length) { toast('Brak danych do eksportu'); return; }
     const headers = Object.keys(currentData[0]);
-    const csv = [headers.map(h => `"${h}"`).join(','), ...currentData.map(r => headers.map(h => `"${r[h]}"`).join(','))].join('\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const csv = [headers.map(h=>`"${h}"`).join(','), ...currentData.map(r=>headers.map(h=>`"${r[h]}"`).join(','))].join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'dane_testowe.csv';
+    a.download='dane_testowe.csv';
     a.click();
   });
-});
+
+}
+
+initApp();
