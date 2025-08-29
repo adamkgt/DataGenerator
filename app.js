@@ -19,7 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
   // ======= FAKE DANE =======
-  const { faker: fakerInstance } = window.faker; // prawidłowy dostęp do UMD 9.x
+  const fakerInstance = window.faker; // dostęp do Faker UMD 9.x
+  if (!fakerInstance) {
+    toast('Błąd: Faker nie został załadowany!');
+    return;
+  }
 
   // ======= GENERATORY PÓL =======
   function genFullName() {
