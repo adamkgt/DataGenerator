@@ -1,66 +1,55 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Generator danych testowych — Freemium</title>
   <link rel="stylesheet" href="style.css">
-  <style>
-    body[data-theme="dark"] { background:#1e1e1e; color:#eee; }
-    body[data-theme="light"] { background:#fff; color:#111; }
-    .toast { position:fixed; bottom:10px; right:10px; background:#333; color:#fff; padding:8px 12px; border-radius:4px; display:none; }
-    table { width:100%; border-collapse:collapse; margin-top:12px; }
-    th, td { border:1px solid #888; padding:4px 8px; text-align:left; }
-    th { cursor:pointer; background:#555; color:#fff; }
-    body[data-theme="light"] th { background:#ccc; color:#000; }
-  </style>
 </head>
 <body data-theme="dark">
   <div class="wrap">
     <header>
       <h1>Generator danych testowych — Freemium</h1>
-      <div>
+      <div class="toolbar">
         <label>Motyw <input id="themeToggle" type="checkbox"></label>
         <label>Tryb bezpieczny <input id="safeToggle" type="checkbox" checked></label>
       </div>
     </header>
 
-    <section>
+    <section class="panel">
+      <h3>Ustawienia</h3>
       <label><input type="checkbox" id="colName" checked> Imię i nazwisko</label>
       <label><input type="checkbox" id="colEmail" checked> E-mail</label>
       <label><input type="checkbox" id="colPhone" checked> Telefon</label>
       <label><input type="checkbox" id="colPesel" checked> PESEL</label>
-
       <div>
-        <label>Liczba rekordów (max 50) <input id="count" type="number" value="10" min="1" max="50"></label>
-        <label>Lokalizacja
-          <select id="locale">
-            <option value="pl">Polska</option>
-            <option value="en">Angielski</option>
-            <option value="de">Niemiecki</option>
-          </select>
-        </label>
+        <label>Liczba rekordów <input id="count" type="number" min="1" max="50" value="10"></label>
         <button id="generate">GENERUJ DANE</button>
       </div>
-
       <div>
         <button id="copyBtn">📋 Kopiuj</button>
         <button id="csvBtn">⬇️ Eksport CSV</button>
       </div>
     </section>
 
-    <section>
-      <table id="dataTable">
-        <thead id="thead"></thead>
-        <tbody id="tbody">
-          <tr><td colspan="4">Brak danych. Wygeneruj rekordy.</td></tr>
-        </tbody>
-      </table>
+    <section class="tableWrap">
+      <div>
+        <strong>Wyniki</strong> <span id="rowsCount">0 rekordów</span>
+      </div>
+      <div style="overflow:auto; max-height:60vh">
+        <table id="dataTable">
+          <thead id="thead"></thead>
+          <tbody id="tbody">
+            <tr><td colspan="4">Brak danych. Wygeneruj rekordy.</td></tr>
+          </tbody>
+        </table>
+      </div>
     </section>
   </div>
 
   <div id="toast" class="toast"></div>
 
+  <!-- Faker 9.x -->
   <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
