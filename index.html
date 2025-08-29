@@ -7,189 +7,111 @@
 <meta name="description" content="Generator fikcyjnych danych do testów manualnych. Działa lokalnie, bez backendu." />
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <style>
-  :root{
-    --bg:#0f1115; --panel:#171a21; --muted:#a9b1bc; --text:#e7eaf0; --primary:#3b82f6; --primary-2:#2563eb; --ok:#10b981; --danger:#ef4444; --border:#262a33;
-    --table-bg:#111318; --table-row:#151923; --shadow: 0 10px 30px rgba(0,0,0,.35);
-  }
-  [data-theme="light"]{
-    --bg:#f7f8fb; --panel:#ffffff; --muted:#556070; --text:#0f1115; --primary:#2563eb; --primary-2:#1d4ed8; --ok:#059669; --danger:#dc2626; --border:#e6e8ef;
-    --table-bg:#ffffff; --table-row:#f2f4f8; --shadow: 0 10px 30px rgba(16,24,40,.08);
-  }
-  *{box-sizing:border-box}
-  html,body{height:100%}
-  body{
-    margin:0; font: 15px/1.5 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    background:var(--bg); color:var(--text);
-  }
-  .wrap{max-width:1100px; margin:0 auto; padding:24px}
-  header{
-    display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px;
-  }
-  .title h1{margin:0; font-size: clamp(22px, 3vw, 32px)}
-  .title p{margin:6px 0 0; color:var(--muted)}
-  .toolbar{
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-  }
-  .btn, button, .chip{
-    display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border);
-    background:var(--panel); color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer;
-    transition: .15s transform, .15s background, .15s border-color;
-  }
-  .btn.primary{ background:var(--primary); border-color:transparent; color:#fff; }
-  .btn.primary:hover{ background:var(--primary-2); transform: translateY(-1px); }
-  .btn:hover{ transform: translateY(-1px); }
-  .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
-  .panel{
-    background:var(--panel); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px;
-  }
-  .grid{
-    display:grid; gap:16px; grid-template-columns: 1.1fr 1fr; margin-top:16px;
-  }
-  @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
-
-  .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-  .field{
-    display:flex; flex-direction:column; gap:8px; min-width: 180px;
-  }
-  .field label{ color:var(--muted); font-size:13px; }
-  .switch{
-    display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px;
-    border:1px solid var(--border); background:var(--table-bg);
-  }
-  .switch input{ width:44px; height:24px; appearance:none; background:#4b5563; border-radius:999px; position:relative; outline:none; cursor:pointer; transition:.18s background; }
-  .switch input:checked{ background:var(--primary); }
-  .switch input:before{
-    content:""; position:absolute; width:18px; height:18px; border-radius:50%; background:#fff; top:3px; left:3px; transition:.18s transform;
-  }
-  .switch input:checked:before{ transform: translateX(20px); }
-  input[type="number"], select{
-    height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--border); background:var(--table-bg); color:var(--text);
-  }
-  .checks{ display:grid; grid-template-columns: repeat(2, minmax(160px, 1fr)); gap:10px; }
-  @media (max-width: 520px){ .checks{ grid-template-columns: 1fr; } }
-  .check{
-    display:flex; gap:10px; align-items:center; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--table-bg);
-  }
-  .check input{ width:18px; height:18px; accent-color:var(--primary); }
-
-  .tableWrap{ margin-top:18px; background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
-  .tableHead{
-    display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-bottom:1px solid var(--border);
-    background: linear-gradient(0deg, var(--panel), var(--table-bg));
-  }
-  .hint{ color:var(--muted); font-size:13px; }
-  table{ width:100%; border-collapse:collapse; }
-  thead th{
-    font-weight:600; text-align:left; padding:12px 14px; font-size:14px; border-bottom:1px solid var(--border); user-select:none; cursor:pointer;
-  }
-  tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); }
-  tbody tr:nth-child(odd){ background:var(--table-row); }
-  .empty{ padding:22px; color:var(--muted); text-align:center; }
-  .badge{ font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background:var(--table-bg); color:var(--muted); }
-  .toast{
-    position:fixed; right:16px; bottom:16px; background:var(--panel); border:1px solid var(--border); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow);
-    display:none;
-  }
+/* ... Twój CSS (bez zmian) ... */
 </style>
 </head>
 <body data-theme="dark">
-  <div class="wrap">
-    <header>
-      <div class="title">
-        <h1>Generator danych testowych — Freemium</h1>
-        <p>Fikcyjne dane do testów manualnych. Działa lokalnie, bez backendu.</p>
-      </div>
-      <div class="toolbar">
-        <span class="switch" title="Tryb jasny/ciemny">
-          <span>Motyw</span>
-          <input id="themeToggle" type="checkbox" />
-        </span>
-        <span class="switch" title="Włączone: używa bezpiecznych domen e-mail, zakresów telefonów, nieprawdziwego PESEL">
-          <span>Tryb bezpieczny</span>
-          <input id="safeToggle" type="checkbox" checked />
-        </span>
-      </div>
-    </header>
-
-    <div class="grid">
-      <section class="panel">
-        <h3 style="margin:0 0 12px">Ustawienia</h3>
-
-        <div class="checks" aria-label="Typy danych">
-          <label class="check"><input type="checkbox" id="colName" checked /> <span>Imię i nazwisko</span></label>
-          <label class="check"><input type="checkbox" id="colEmail" checked /> <span>E-mail</span></label>
-          <label class="check"><input type="checkbox" id="colPhone" checked /> <span>Telefon</span></label>
-          <label class="check"><input type="checkbox" id="colPesel" checked /> <span>PESEL</span></label>
-        </div>
-
-        <div class="row" style="margin-top:14px">
-          <div class="field">
-            <label for="count">Liczba rekordów (max 50 w freemium)</label>
-            <input id="count" type="number" min="1" max="50" value="10" />
-          </div>
-          <div class="field">
-            <label for="locale">Lokalizacja (wpływa na imiona)</label>
-            <select id="locale">
-              <option value="pl">Polska (pl)</option>
-              <option value="en">Angielski (en)</option>
-              <option value="de">Niemiecki (de)</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>&nbsp;</label>
-            <button id="generate" class="btn primary">GENERUJ DANE</button>
-          </div>
-        </div>
-
-        <div class="row" style="margin-top:8px">
-          <button id="copyBtn" class="btn" title="Kopiuj całą tabelę do schowka">📋 Kopiuj</button>
-          <button id="csvBtn" class="btn" title="Pobierz CSV">⬇️ Eksport CSV</button>
-          <span class="hint">Freemium: bez zapisu historii, bez bazy, wszystko działa w przeglądarce.</span>
-        </div>
-      </section>
-
-      <section class="tableWrap">
-        <div class="tableHead">
-          <div class="row">
-            <strong>Wyniki</strong>
-            <span id="rowsCount" class="badge">0 rekordów</span>
-          </div>
-          <span class="hint">Kliknij nagłówek, aby sortować</span>
-        </div>
-        <div style="overflow:auto; max-height: 60vh">
-          <table id="dataTable" aria-live="polite">
-            <thead id="thead"></thead>
-            <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
-          </table>
-        </div>
-      </section>
+<div class="wrap">
+  <header>
+    <div class="title">
+      <h1>Generator danych testowych — Freemium</h1>
+      <p>Fikcyjne dane do testów manualnych. Działa lokalnie, bez backendu.</p>
     </div>
+    <div class="toolbar">
+      <span class="switch" title="Tryb jasny/ciemny">
+        <span>Motyw</span>
+        <input id="themeToggle" type="checkbox" />
+      </span>
+      <span class="switch" title="Włączone: używa bezpiecznych domen e-mail, zakresów telefonów, nieprawdziwego PESEL">
+        <span>Tryb bezpieczny</span>
+        <input id="safeToggle" type="checkbox" checked />
+      </span>
+    </div>
+  </header>
+
+  <div class="grid">
+    <section class="panel">
+      <h3 style="margin:0 0 12px">Ustawienia</h3>
+
+      <div class="checks" aria-label="Typy danych">
+        <label class="check"><input type="checkbox" id="colName" checked /> <span>Imię i nazwisko</span></label>
+        <label class="check"><input type="checkbox" id="colEmail" checked /> <span>E-mail</span></label>
+        <label class="check"><input type="checkbox" id="colPhone" checked /> <span>Telefon</span></label>
+        <label class="check"><input type="checkbox" id="colPesel" checked /> <span>PESEL</span></label>
+      </div>
+
+      <div class="row" style="margin-top:14px">
+        <div class="field">
+          <label for="count">Liczba rekordów (max 50 w freemium)</label>
+          <input id="count" type="number" min="1" max="50" value="10" />
+        </div>
+        <div class="field">
+          <label for="locale">Lokalizacja (wpływa na imiona)</label>
+          <select id="locale">
+            <option value="pl">Polska (pl)</option>
+            <option value="en">Angielski (en)</option>
+            <option value="de">Niemiecki (de)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button id="generate" class="btn primary">GENERUJ DANE</button>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:8px">
+        <button id="copyBtn" class="btn" title="Kopiuj całą tabelę do schowka">📋 Kopiuj</button>
+        <button id="csvBtn" class="btn" title="Pobierz CSV">⬇️ Eksport CSV</button>
+        <span class="hint">Freemium: bez zapisu historii, bez bazy, wszystko działa w przeglądarce.</span>
+      </div>
+    </section>
+
+    <section class="tableWrap">
+      <div class="tableHead">
+        <div class="row">
+          <strong>Wyniki</strong>
+          <span id="rowsCount" class="badge">0 rekordów</span>
+        </div>
+        <span class="hint">Kliknij nagłówek, aby sortować</span>
+      </div>
+      <div style="overflow:auto; max-height: 60vh">
+        <table id="dataTable" aria-live="polite">
+          <thead id="thead"></thead>
+          <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
   </div>
+</div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- Faker (UMD) do generowania bezpiecznych danych; tylko w przeglądarce -->
-<script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js" defer></script>
-<script src="twój_skrypt.js" defer></script>
+<!-- Faker UMD -->
+<script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
+
 <script>
-  // --- UTIL: motyw & toast ---
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.faker) {
+    console.error('Faker nie został poprawnie załadowany!');
+    return;
+  }
+
   const $ = sel => document.querySelector(sel);
   const $$ = sel => Array.from(document.querySelectorAll(sel));
+
   const toast = (msg) => {
     const el = $('#toast'); el.textContent = msg; el.style.display='block';
     setTimeout(()=> el.style.display='none', 1800);
   };
 
-  // Motyw
   const themeToggle = $('#themeToggle');
   const applyTheme = () => document.body.setAttribute('data-theme', themeToggle.checked ? 'light' : 'dark');
   themeToggle.addEventListener('change', applyTheme);
   applyTheme();
 
-  // --- Bezpieczeństwo / ograniczenia freemium ---
   const MAX_FREEMIUM = 50;
+  const safeToggle = $('#safeToggle');
 
-  // --- Konfiguracja Faker wg locale ---
   const setLocale = (locale) => {
     switch(locale){
       case 'pl': window.faker.setDefaultRefDate(new Date()); window.faker.locale = 'pl'; break;
@@ -198,13 +120,7 @@
     }
   };
 
-  // --- Generatory pól ---
-  const safeToggle = $('#safeToggle');
-
-  function genFullName() {
-    return window.faker.person.fullName();
-  }
-
+  function genFullName() { return window.faker.person.fullName(); }
   function genEmail(fullName) {
     if (safeToggle.checked) {
       const parts = fullName.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'').split(' ');
@@ -230,16 +146,13 @@
     let year = d.getFullYear();
     let month = d.getMonth()+1;
     let day = d.getDate();
-
     let m = month + (year>=2000?20:0);
     const yy = String(year).slice(-2).padStart(2,'0');
     const mm = String(m).padStart(2,'0');
     const dd = String(day).padStart(2,'0');
-
     const serial = String(Math.floor(Math.random()*1000)).padStart(3,'0');
     const sex = Math.random()<0.5 ? 0 : 1;
     const base = `${yy}${mm}${dd}${serial}${sex}`;
-
     const weights = [1,3,7,9,1,3,7,9,1,3];
     const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i], 0);
     const correct = (10 - (s % 10)) % 10;
@@ -254,23 +167,19 @@
     let year = d.getFullYear();
     let month = d.getMonth()+1;
     let day = d.getDate();
-
     let m = month + (year>=2000?20:0);
     const yy = String(year).slice(-2).padStart(2,'0');
     const mm = String(m).padStart(2,'0');
     const dd = String(day).padStart(2,'0');
-
     const serial = String(Math.floor(Math.random()*1000)).padStart(3,'0');
     const sex = Math.random()<0.5 ? 0 : 1;
     const base = `${yy}${mm}${dd}${serial}${sex}`;
-
     const weights = [1,3,7,9,1,3,7,9,1,3];
     const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i], 0);
     const control = (10 - (s % 10)) % 10;
     return base + control;
   }
 
-  // --- Tabela / sortowanie / eksport ---
   const thead = $('#thead');
   const tbody = $('#tbody');
   const rowsCount = $('#rowsCount');
@@ -331,7 +240,6 @@
     return cols.length ? cols : [{key:'name',label:'Imię i nazwisko'}];
   }
 
-  // --- Generowanie ---
   $('#generate').addEventListener('click', ()=>{
     const n = Math.min(parseInt($('#count').value || '0',10), MAX_FREEMIUM);
     $('#count').value = String(n || 0);
@@ -357,7 +265,6 @@
     toast(`Wygenerowano ${n} rekordów`);
   });
 
-  // Kopiowanie
   $('#copyBtn').addEventListener('click', async ()=>{
     if(!data.length){ toast('Brak danych do skopiowania.'); return; }
     const cols = currentColumns();
@@ -368,7 +275,6 @@
     toast('Skopiowano do schowka');
   });
 
-  // CSV
   $('#csvBtn').addEventListener('click', ()=>{
     if(!data.length){ toast('Brak danych do eksportu.'); return; }
     const cols = currentColumns();
@@ -380,14 +286,7 @@
     const a = document.createElement('a'); a.href = url; a.download = 'dane_testowe.csv'; a.click();
     URL.revokeObjectURL(url);
   });
-
-  document.addEventListener('DOMContentLoaded', ()=>{
-    // miejsce na przyszłe inicjalizacje
-  });
+});
 </script>
-
 </body>
 </html>
-
-
-
