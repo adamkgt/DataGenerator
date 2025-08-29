@@ -18,23 +18,14 @@ let safeMode = $('#safeToggle').checked;
 $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
 // ======= FAKE DANE =======
-const { faker } = window; // obiekt z CDN
-
-// Funkcja tworzy instancję Faker dla konkretnego locale
-function getFakerInstance(locale) {
-  switch(locale){
-    case 'pl': return faker;
-    case 'de': return faker;
-    default: return faker;
-  }
-}
+const { faker: fakerInstance } = window.faker; // UMD 9.x: prawidłowy dostęp do API
 
 // ======= GENERATORY PÓL =======
-function genFullName(fakerInstance) {
+function genFullName() {
   return fakerInstance.person.fullName();
 }
 
-function genEmail(fakerInstance, fullName) {
+function genEmail(fullName) {
   if (safeMode) {
     const parts = fullName.toLowerCase().replace(/\s+/g, '.').replace(/[^a-z0-9\.]/g,'');
     const domain = ['example.com','example.org','example.net'][Math.floor(Math.random()*3)];
@@ -44,7 +35,7 @@ function genEmail(fakerInstance, fullName) {
   }
 }
 
-function genPhone(fakerInstance) {
+function genPhone() {
   if (safeMode) {
     const prefix = 600 + Math.floor(Math.random()*200);
     const rest = String(Math.floor(Math.random()*1_000_000)).padStart(6,'0');
@@ -54,6 +45,7 @@ function genPhone(fakerInstance) {
   }
 }
 
+// Generuje PESEL
 function genPesel() {
   const start = new Date(1970,0,1).getTime();
   const end   = new Date(2009,11,31).getTime();
@@ -69,11 +61,9 @@ function genPesel() {
   const sex = Math.random()<0.5 ? 0 : 1;
   const base = `${yy}${mm}${dd}${serial}${sex}`;
   if (safeMode) {
-    // losowa cyfra kontrolna, PESEL fikcyjny
-    const control = Math.floor(Math.random()*10);
+    const control = Math.floor(Math.random()*10); // fikcyjny, safe
     return base + control;
   } else {
-    // poprawna suma kontrolna
     const weights = [1,3,7,9,1,3,7,9,1,3];
     const s = base.split('').reduce((acc,d,i)=> acc + parseInt(d,10)*weights[i], 0);
     const control = (10 - (s % 10)) % 10;
@@ -82,19 +72,18 @@ function genPesel() {
 }
 
 // ======= GENEROWANIE JEDNEGO REKORDU =======
-function generateRow(cols, fakerInstance) {
+function generateRow(cols) {
   const row = {};
-  if (cols.name) row.name = genFullName(fakerInstance);
-  if (cols.email) row.email = genEmail(fakerInstance, row.name);
-  if (cols.phone) row.phone = genPhone(fakerInstance);
+  if (cols.name) row.name = genFullName();
+  if (cols.email) row.email = genEmail(row.name);
+  if (cols.phone) row.phone = genPhone();
   if (cols.pesel) row.pesel = genPesel();
   return row;
 }
 
 // ======= GENEROWANIE WIELU REKORDÓW =======
-function generateData(n, cols, locale) {
-  const fakerInstance = getFakerInstance(locale);
-  return Array.from({length: n}, () => generateRow(cols, fakerInstance));
+function generateData(n, cols) {
+  return Array.from({length: n}, () => generateRow(cols));
 }
 
 // ======= TABELA =======
@@ -116,12 +105,11 @@ function renderTable(data, cols) {
   }
 
   tbody.innerHTML = data.map(r =>
-    `<tr>${headers.map(h => r[h]).map(v => `<td>${v}</td>`).join('')}</tr>`
+    `<tr>${headers.map(h => `<td>${r[h]}</td>`).join('')}</tr>`
   ).join('');
 
   $('#rowsCount').textContent = data.length + ' rekordów';
 
-  // Sortowanie po kliknięciu nagłówka
   $$('#thead th').forEach(th => th.addEventListener('click', () => {
     const key = th.dataset.key;
     if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
@@ -135,14 +123,13 @@ function renderTable(data, cols) {
 // ======= GENERUJ =======
 $('#generate').addEventListener('click', () => {
   const n = Math.min(50, Math.max(1, parseInt($('#count').value,10) || 1));
-  const locale = $('#locale').value;
   const cols = {
     name: $('#colName').checked,
     email: $('#colEmail').checked,
     phone: $('#colPhone').checked,
     pesel: $('#colPesel').checked
   };
-  currentData = generateData(n, cols, locale);
+  currentData = generateData(n, cols);
   renderTable(currentData, cols);
   toast(`Wygenerowano ${n} rekordów`);
 });
