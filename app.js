@@ -44,15 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
       : Math.floor(Math.random()*1e11).toString().padStart(11,'0');
   }
 
-  function generateRow(cols) {
-    const name = genFullName();
-    const row = {};
-    if (cols.name) row.name = name;
-    if (cols.email) row.email = genEmail(name);
-    if (cols.phone) row.phone = genPhonePL();
-    if (cols.pesel) row.pesel = genPesel();
-    return row;
-  }
+function generateRow(cols) {
+  const row = {};
+  if (cols.name) row.name = window.faker.person.firstName() + ' ' + window.faker.person.lastName();
+  if (cols.email) row.email = window.faker.internet.email();
+  if (cols.phone) row.phone = window.faker.phone.number('###-###-###');
+  if (cols.pesel) row.pesel = Math.floor(Math.random()*1e11).toString().padStart(11,'0');
+  return row;
+}
 
   function generateData(n, cols) {
     return Array.from({length:n}, () => generateRow(cols));
@@ -117,3 +116,4 @@ document.addEventListener('DOMContentLoaded', () => {
     const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='dane_testowe.csv'; a.click();
   });
 });
+
