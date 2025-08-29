@@ -19,13 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
   $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
   // ======= FAKE DANE =======
-  const fakerInstance = window.faker; // dostęp do Faker UMD 9.x
+  const fakerInstance = window.faker;
   if (!fakerInstance) {
     toast('Błąd: Faker nie został załadowany!');
     return;
   }
 
-  // ======= GENERATORY PÓL =======
+  // ======= GENERATORY =======
   function genFullName() {
     return fakerInstance.person.fullName();
   }
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sex = Math.random()<0.5 ? 0 : 1;
     const base = `${yy}${mm}${dd}${serial}${sex}`;
     if (safeMode) {
-      const control = Math.floor(Math.random()*10); // fikcyjny, safe
+      const control = Math.floor(Math.random()*10);
       return base + control;
     } else {
       const weights = [1,3,7,9,1,3,7,9,1,3];
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ======= GENEROWANIE JEDNEGO REKORDU =======
   function generateRow(cols) {
     const row = {};
     if (cols.name) row.name = genFullName();
@@ -85,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
     return row;
   }
 
-  // ======= GENEROWANIE WIELU REKORDÓW =======
   function generateData(n, cols) {
     return Array.from({length: n}, () => generateRow(cols));
   }
