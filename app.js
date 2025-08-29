@@ -1,9 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const fakerInstance = window.faker;
-  if (!fakerInstance) {
+  if (!window.faker) {
     alert('Faker nie został załadowany');
     return;
   }
+
+  // Tworzymy instancję Faker
+  let fakerInstance = new window.faker.Faker({ locale: 'pl' });
 
   // ======= UTIL =======
   const $ = sel => document.querySelector(sel);
@@ -28,24 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
   function generateRow(cols) {
     const row = {};
     if (cols.name) row.name = fakerInstance.person.firstName() + ' ' + fakerInstance.person.lastName();
-    if (cols.email) {
-      if (safeMode) {
-        const parts = row.name.toLowerCase().split(' ');
-        row.email = `${parts[0]}.${parts[1] || 'user'}@example.com`;
-      } else {
-        row.email = fakerInstance.internet.email();
-      }
-    }
-    if (cols.phone) {
-      row.phone = safeMode
-        ? `6${Math.floor(Math.random()*100000000).toString().padStart(8,'0')}`
-        : fakerInstance.phone.number('###-###-###');
-    }
-    if (cols.pesel) {
-      row.pesel = safeMode
-        ? Math.floor(Math.random()*1e11).toString().padStart(11,'0')
-        : Math.floor(Math.random()*1e11).toString().padStart(11,'0');
-    }
+    if (cols.email) row.email = safeMode
+      ? row.name.toLowerCase().split(' ').join('.') + '@example.com'
+      : fakerInstance.internet.email();
+    if (cols.phone) row.phone = safeMode
+      ? '6' + Math.floor(Math.random() * 100000000).toString().padStart(8,'0')
+      : fakerInstance.phone.number('###-###-###');
+    if (cols.pesel) row.pesel = safeMode
+      ? Math.floor(Math.random() * 1e11).toString().padStart(11,'0')
+      : Math.floor(Math.random() * 1e11).toString().padStart(11,'0');
     return row;
   }
 
@@ -65,25 +58,28 @@ document.addEventListener('DOMContentLoaded', () => {
     thead.innerHTML = `<tr>${headers.map(h=>`<th data-key="${h}">${h}</th>`).join('')}</tr>`;
 
     if (!data.length) {
-      tbody.innerHTML = `<tr><td colspan="${headers.length}" class="empty">Brak danych</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="${headers.length}">Brak danych</td></tr>`;
       $('#rowsCount').textContent = '0 rekordów';
       return;
     }
 
-    tbody.innerHTML = data.map(r => `<tr>${headers.map(h=>r[h]).join('')}</tr>`).join('');
-    $('#rowsCount').textContent = data.length+' rekordów';
+    tbody.innerHTML = data.map(r => `<tr>${headers.map(h=>r[h]).join('</td><td>')}</tr>`).join('');
+    $('#rowsCount').textContent = data.length + ' rekordów';
 
-    $$('#thead th').forEach(th=>th.addEventListener('click',()=>{
+    // Sortowanie
+    $$('#thead th').forEach(th => th.addEventListener('click', () => {
       const key = th.dataset.key;
-      if(sortKey===key) sortAsc=!sortAsc; else {sortKey=key; sortAsc=true;}
+      if(sortKey===key) sortAsc=!sortAsc; else { sortKey=key; sortAsc=true; }
       const sorted = [...currentData].sort((a,b)=> (a[key]>b[key]?1:-1)*(sortAsc?1:-1));
       renderTable(sorted, cols);
     }));
   }
 
   // ======= GENERUJ =======
-  $('#generate').addEventListener('click', ()=>{
+  $('#generate').addEventListener('click', () => {
     const n = Math.min(50, Math.max(1, parseInt($('#count').value,10)||1));
+    const locale = $('#locale').value;
+    fakerInstance = new window.faker.Faker({ locale: locale });
     const cols = {
       name: $('#colName').checked,
       email: $('#colEmail').checked,
@@ -96,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ======= KOPIUJ =======
-  $('#copyBtn').addEventListener('click', ()=>{
+  $('#copyBtn').addEventListener('click', () => {
     if(!currentData.length){ toast('Brak danych do skopiowania'); return; }
     const headers = Object.keys(currentData[0]);
     const text = [headers.join('\t'), ...currentData.map(r=>headers.map(h=>r[h]).join('\t'))].join('\n');
@@ -104,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ======= CSV =======
-  $('#csvBtn').addEventListener('click', ()=>{
+  $('#csvBtn').addEventListener('click', () => {
     if(!currentData.length){ toast('Brak danych do eksportu'); return; }
     const headers = Object.keys(currentData[0]);
     const csv = [headers.map(h=>`"${h}"`).join(','), ...currentData.map(r=>headers.map(h=>`"${r[h]}"`).join(','))].join('\n');
