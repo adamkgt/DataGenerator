@@ -1,3 +1,6 @@
+document.addEventListener('DOMContentLoaded', () => {
+ const { faker: fakerInstance } = window.faker;
+
 // ======= UTIL =======
 const $ = sel => document.querySelector(sel);
 const $$ = sel => Array.from(document.querySelectorAll(sel));
@@ -153,3 +156,4 @@ $('#csvBtn').addEventListener('click', () => {
   a.download = 'dane_testowe.csv';
   a.click();
 });
+
