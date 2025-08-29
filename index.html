@@ -191,9 +191,9 @@
   // --- Konfiguracja Faker wg locale ---
   const setLocale = (locale) => {
     switch(locale){
-      case 'pl': faker.setDefaultRefDate(new Date()); faker.locale = 'pl'; break;
-      case 'de': faker.locale = 'de'; break;
-      default: faker.locale = 'en'; break;
+      case 'pl': window.faker.setDefaultRefDate(new Date()); window.faker.locale = 'pl'; break;
+      case 'de': window.faker.locale = 'de'; break;
+      default: window.faker.locale = 'en'; break;
     }
   };
 
@@ -201,7 +201,7 @@
   const safeToggle = $('#safeToggle');
 
   function genFullName() {
-    return faker.person.fullName();
+    return window.faker.person.fullName();
   }
 
   function genEmail(fullName) {
@@ -212,7 +212,7 @@
       const domain = domains[Math.floor(Math.random()*domains.length)];
       return `${base.replace(/[^a-z0-9\.]/g,'')}${Math.floor(Math.random()*90+10)}@${domain}`;
     }
-    return faker.internet.email();
+    return window.faker.internet.email();
   }
 
   function genPhonePL() {
@@ -387,4 +387,5 @@
 
 </body>
 </html>
+
 
