@@ -1,21 +1,53 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Generator danych testowych</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Generator danych testowych — Freemium</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="dark">
-  <div>
-    <button id="themeToggle">Zmień motyw</button>
-    <button id="generate">Generuj dane</button>
-    <table>
-      <thead id="thead"></thead>
-      <tbody id="tbody"></tbody>
-    </table>
+  <div class="wrap">
+    <header>
+      <h1>Generator danych testowych — Freemium</h1>
+      <div class="toolbar">
+        <label>Motyw <input type="checkbox" id="themeToggle"></label>
+        <label>Tryb bezpieczny <input type="checkbox" id="safeToggle" checked></label>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div>
+        <label>Liczba rekordów <input type="number" id="count" value="10" min="1" max="50"></label>
+        <label>Lokalizacja
+          <select id="locale">
+            <option value="pl">Polska (pl)</option>
+            <option value="en">Angielski (en)</option>
+            <option value="de">Niemiecki (de)</option>
+          </select>
+        </label>
+        <button id="generate">GENERUJ DANE</button>
+      </div>
+      <div>
+        <button id="copyBtn">📋 Kopiuj</button>
+        <button id="csvBtn">⬇️ Eksport CSV</button>
+      </div>
+    </section>
+
+    <section class="tableWrap">
+      <table id="dataTable">
+        <thead id="thead"></thead>
+        <tbody id="tbody">
+          <tr><td colspan="4" class="empty">Brak danych. Wygeneruj rekordy.</td></tr>
+        </tbody>
+      </table>
+      <div id="rowsCount">0 rekordów</div>
+    </section>
   </div>
 
+  <div id="toast" class="toast"></div>
+
+  <!-- Faker UMD -->
   <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
   <script src="app.js"></script>
 </body>
