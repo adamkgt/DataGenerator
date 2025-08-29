@@ -16,11 +16,11 @@
       <div class="toolbar">
         <span class="switch">
           <span>Motyw</span>
-          <input id="themeToggle" type="checkbox" />
+          <input id="themeToggle" type="checkbox">
         </span>
         <span class="switch">
           <span>Tryb bezpieczny</span>
-          <input id="safeToggle" type="checkbox" checked />
+          <input id="safeToggle" type="checkbox" checked>
         </span>
       </div>
     </header>
@@ -29,16 +29,16 @@
       <section class="panel">
         <h3>Ustawienia</h3>
         <div class="checks">
-          <label><input type="checkbox" id="colName" checked /> Imię i nazwisko</label>
-          <label><input type="checkbox" id="colEmail" checked /> E-mail</label>
-          <label><input type="checkbox" id="colPhone" checked /> Telefon</label>
-          <label><input type="checkbox" id="colPesel" checked /> PESEL</label>
+          <label class="check"><input type="checkbox" id="colName" checked> <span>Imię i nazwisko</span></label>
+          <label class="check"><input type="checkbox" id="colEmail" checked> <span>E-mail</span></label>
+          <label class="check"><input type="checkbox" id="colPhone" checked> <span>Telefon</span></label>
+          <label class="check"><input type="checkbox" id="colPesel" checked> <span>PESEL</span></label>
         </div>
 
         <div class="row">
           <div class="field">
             <label for="count">Liczba rekordów (max 50)</label>
-            <input id="count" type="number" min="1" max="50" value="10" />
+            <input id="count" type="number" min="1" max="50" value="10">
           </div>
           <div class="field">
             <label for="locale">Lokalizacja</label>
@@ -56,6 +56,7 @@
         <div class="row">
           <button id="copyBtn" class="btn">📋 Kopiuj</button>
           <button id="csvBtn" class="btn">⬇️ Eksport CSV</button>
+          <span class="hint">Freemium: wszystko działa w przeglądarce.</span>
         </div>
       </section>
 
@@ -69,18 +70,17 @@
         <div style="overflow:auto; max-height: 60vh">
           <table id="dataTable">
             <thead id="thead"></thead>
-            <tbody id="tbody"><tr><td colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
+            <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
           </table>
         </div>
       </section>
     </div>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- Faker 9.x -->
-  <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
-  <!-- Nasz skrypt -->
-  <script src="app.js"></script>
+  <!-- Faker i Twój skrypt z defer -->
+  <script defer src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
+  <script defer src="app.js"></script>
 </body>
 </html>
