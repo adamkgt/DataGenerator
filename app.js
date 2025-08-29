@@ -17,58 +17,43 @@ $('#themeToggle').addEventListener('change', e => {
 let safeMode = true;
 $('#safeToggle').addEventListener('change', e => safeMode = e.target.checked);
 
-// ======= SPRAWDZENIE FAKER =======
+// ======= SPRAWDŹ FAKE =======
 if (!window.faker) {
   toast('Faker nie został załadowany!');
   throw new Error('Faker nie załadowany');
 }
-const faker = window.faker;
 
-// ======= GENERATORY DANYCH =======
-function genFullName() {
-  return faker.person.firstName() + ' ' + faker.person.lastName();
-}
-
-function genEmail(fullName) {
-  if (safeMode) {
-    const parts = fullName.toLowerCase().normalize('NFD').replace(/\p{Diacritic}/gu,'').split(' ');
-    const base = [parts[0]?.[0] || 'u', parts[1] || 'user'].join('.');
-    const domains = ['example.com','example.org','example.net'];
-    const domain = domains[Math.floor(Math.random()*domains.length)];
-    return `${base}${Math.floor(Math.random()*90+10)}@${domain}`;
+// ======= POMOCNICZE =======
+function getFaker(locale) {
+  const f = window.faker;
+  switch (locale) {
+    case 'pl': f.setLocale('pl'); break;
+    case 'de': f.setLocale('de'); break;
+    default: f.setLocale('en'); break;
   }
-  return faker.internet.email();
+  return f;
 }
 
-function genPhone() {
-  if (safeMode) {
-    const block = Math.floor(Math.random()*200)+600;
-    const rest = String(Math.floor(Math.random()*1_000_000)).padStart(6,'0');
-    return `${block} ${rest.slice(0,3)} ${rest.slice(3,6)}`;
-  }
-  return faker.phone.number('+48 ### ### ###');
-}
-
-function genPesel() {
-  // Tryb safe: losowy 11-cyfrowy ciąg (nie prawdziwy PESEL)
-  if (safeMode) return faker.string.numeric(11);
-  // Normalny: też 11 cyfr, dla prostoty generujemy tak samo
-  return faker.string.numeric(11);
-}
-
-// ======= GENEROWANIE WIERZCHÓW =======
-function generateRow(cols) {
-  const fullName = genFullName();
+// ======= GENEROWANIE REKORDÓW =======
+function generateRow(cols, f) {
   const row = {};
-  if (cols.name)  row.name = fullName;
-  if (cols.email) row.email = genEmail(fullName);
-  if (cols.phone) row.phone = genPhone();
-  if (cols.pesel) row.pesel = genPesel();
+  if (cols.name) row.name = f.person.fullName();
+  if (cols.email) row.email = safeMode
+    ? f.internet.email({ provider: 'example.com' })
+    : f.internet.email();
+  if (cols.phone) row.phone = safeMode
+    ? f.phone.number('+48 5## ### ###')
+    : f.phone.number();
+  if (cols.pesel) {
+    // w trybie safe generujemy losową liczbę 11-cyfrową, w normalnym faker nie ma PESEL
+    row.pesel = String(Math.floor(Math.random() * 1e11)).padStart(11, '0');
+  }
   return row;
 }
 
-function generateData(n, cols) {
-  return Array.from({length: n}, () => generateRow(cols));
+function generateData(count, cols, locale) {
+  const f = getFaker(locale);
+  return Array.from({ length: count }, () => generateRow(cols, f));
 }
 
 // ======= TABELA =======
@@ -76,42 +61,33 @@ let currentData = [];
 let sortKey = null;
 let sortAsc = true;
 
-function currentColumns() {
-  return {
-    name: $('#colName').checked,
-    email: $('#colEmail').checked,
-    phone: $('#colPhone').checked,
-    pesel: $('#colPesel').checked
-  };
-}
-
 function renderTable(data, cols) {
   const thead = $('#thead');
   const tbody = $('#tbody');
   const headers = Object.keys(cols).filter(k => cols[k]);
 
-  // Nagłówek
   thead.innerHTML = `<tr>${headers.map(h => `<th data-key="${h}">${h}</th>`).join('')}</tr>`;
 
-  // Body
   if (!data.length) {
-    tbody.innerHTML = `<tr><td colspan="${headers.length}" class="empty">Brak danych. Wygeneruj rekordy.</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="${headers.length}" class="empty">Brak danych</td></tr>`;
     $('#rowsCount').textContent = '0 rekordów';
     return;
   }
 
   tbody.innerHTML = data.map(r =>
-    `<tr>${headers.map(h => `<td>${r[h]}</td>`).join('')}</tr>`
+    `<tr>${headers.map(h => r[h] ?? '').map(val => `<td>${val}</td>`).join('')}</tr>`
   ).join('');
 
   $('#rowsCount').textContent = data.length + ' rekordów';
 
-  // Sortowanie po kliknięciu nagłówka
+  // sortowanie po kliknięciu nagłówka
   $$('#thead th').forEach(th => th.addEventListener('click', () => {
     const key = th.dataset.key;
-    if (sortKey === key) sortAsc = !sortAsc; else { sortKey = key; sortAsc = true; }
+    if (sortKey === key) sortAsc = !sortAsc;
+    else { sortKey = key; sortAsc = true; }
+
     const sorted = [...currentData].sort((a,b) =>
-      (a[key] > b[key] ? 1 : -1) * (sortAsc ? 1 : -1)
+      ((a[key] ?? '') > (b[key] ?? '') ? 1 : -1) * (sortAsc ? 1 : -1)
     );
     renderTable(sorted, cols);
   }));
@@ -120,8 +96,14 @@ function renderTable(data, cols) {
 // ======= GENERUJ =======
 $('#generate').addEventListener('click', () => {
   const n = Math.min(50, Math.max(1, parseInt($('#count').value,10) || 1));
-  const cols = currentColumns();
-  currentData = generateData(n, cols);
+  const locale = $('#locale').value;
+  const cols = {
+    name: $('#colName').checked,
+    email: $('#colEmail').checked,
+    phone: $('#colPhone').checked,
+    pesel: $('#colPesel').checked
+  };
+  currentData = generateData(n, cols, locale);
   renderTable(currentData, cols);
   toast(`Wygenerowano ${n} rekordów`);
 });
