@@ -9,78 +9,58 @@
 <body data-theme="dark">
   <div class="wrap">
     <header>
-      <div class="title">
-        <h1>Generator danych testowych — Freemium</h1>
-        <p>Fikcyjne dane do testów manualnych. Działa lokalnie, bez backendu.</p>
-      </div>
+      <h1>Generator danych testowych — Freemium</h1>
       <div class="toolbar">
-        <span class="switch">
-          <span>Motyw</span>
+        <label>Motyw
           <input id="themeToggle" type="checkbox">
-        </span>
-        <span class="switch">
-          <span>Tryb bezpieczny</span>
+        </label>
+        <label>Tryb bezpieczny
           <input id="safeToggle" type="checkbox" checked>
-        </span>
+        </label>
       </div>
     </header>
 
-    <div class="grid">
-      <section class="panel">
-        <h3>Ustawienia</h3>
-        <div class="checks">
-          <label class="check"><input type="checkbox" id="colName" checked> <span>Imię i nazwisko</span></label>
-          <label class="check"><input type="checkbox" id="colEmail" checked> <span>E-mail</span></label>
-          <label class="check"><input type="checkbox" id="colPhone" checked> <span>Telefon</span></label>
-          <label class="check"><input type="checkbox" id="colPesel" checked> <span>PESEL</span></label>
-        </div>
+    <section class="panel">
+      <div>
+        <label><input type="checkbox" id="colName" checked> Imię i nazwisko</label>
+        <label><input type="checkbox" id="colEmail" checked> E-mail</label>
+        <label><input type="checkbox" id="colPhone" checked> Telefon</label>
+        <label><input type="checkbox" id="colPesel" checked> PESEL</label>
+      </div>
 
-        <div class="row">
-          <div class="field">
-            <label for="count">Liczba rekordów (max 50)</label>
-            <input id="count" type="number" min="1" max="50" value="10">
-          </div>
-          <div class="field">
-            <label for="locale">Lokalizacja</label>
-            <select id="locale">
-              <option value="pl">Polska (pl)</option>
-              <option value="en">Angielski (en)</option>
-              <option value="de">Niemiecki (de)</option>
-            </select>
-          </div>
-          <div class="field">
-            <button id="generate" class="btn primary">GENERUJ DANE</button>
-          </div>
-        </div>
+      <div>
+        <label>Liczba rekordów (max 50)
+          <input id="count" type="number" value="10" min="1" max="50">
+        </label>
+        <label>Lokalizacja
+          <select id="locale">
+            <option value="pl">Polska</option>
+            <option value="en">Angielski</option>
+            <option value="de">Niemiecki</option>
+          </select>
+        </label>
+        <button id="generate">GENERUJ DANE</button>
+      </div>
 
-        <div class="row">
-          <button id="copyBtn" class="btn">📋 Kopiuj</button>
-          <button id="csvBtn" class="btn">⬇️ Eksport CSV</button>
-          <span class="hint">Freemium: wszystko działa w przeglądarce.</span>
-        </div>
-      </section>
+      <div>
+        <button id="copyBtn">📋 Kopiuj</button>
+        <button id="csvBtn">⬇️ Eksport CSV</button>
+      </div>
+    </section>
 
-      <section class="tableWrap">
-        <div class="tableHead">
-          <div class="row">
-            <strong>Wyniki</strong>
-            <span id="rowsCount" class="badge">0 rekordów</span>
-          </div>
-        </div>
-        <div style="overflow:auto; max-height: 60vh">
-          <table id="dataTable">
-            <thead id="thead"></thead>
-            <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+    <section>
+      <table id="dataTable">
+        <thead id="thead"></thead>
+        <tbody id="tbody">
+          <tr><td colspan="4">Brak danych. Wygeneruj rekordy.</td></tr>
+        </tbody>
+      </table>
+    </section>
   </div>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="toast" class="toast"></div>
 
-  <!-- Faker i Twój skrypt z defer -->
-  <script defer src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
-  <script defer src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
