@@ -29,10 +29,10 @@
       <section class="panel">
         <h3>Ustawienia</h3>
         <div class="checks">
-          <label class="check"><input type="checkbox" id="colName" checked /> <span>Imię i nazwisko</span></label>
-          <label class="check"><input type="checkbox" id="colEmail" checked /> <span>E-mail</span></label>
-          <label class="check"><input type="checkbox" id="colPhone" checked /> <span>Telefon</span></label>
-          <label class="check"><input type="checkbox" id="colPesel" checked /> <span>PESEL</span></label>
+          <label><input type="checkbox" id="colName" checked /> Imię i nazwisko</label>
+          <label><input type="checkbox" id="colEmail" checked /> E-mail</label>
+          <label><input type="checkbox" id="colPhone" checked /> Telefon</label>
+          <label><input type="checkbox" id="colPesel" checked /> PESEL</label>
         </div>
 
         <div class="row">
@@ -69,7 +69,7 @@
         <div style="overflow:auto; max-height: 60vh">
           <table id="dataTable">
             <thead id="thead"></thead>
-            <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych</td></tr></tbody>
+            <tbody id="tbody"><tr><td colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
           </table>
         </div>
       </section>
@@ -78,9 +78,9 @@
 
   <div id="toast" class="toast"></div>
 
-  <!-- najpierw Faker -->
+  <!-- Faker 9.x -->
   <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
-  <!-- potem Twój app.js -->
+  <!-- Nasz skrypt -->
   <script src="app.js"></script>
 </body>
 </html>
