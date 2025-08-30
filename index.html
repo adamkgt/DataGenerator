@@ -61,23 +61,28 @@
 </section>
 
 <section class="tableWrap">
-<div class="tableHead">
-  <div class="row">
-    <strong>Wyniki</strong>
-    <span id="rowsCount" class="badge">0 rekordów</span>
+  <div class="tableHead">
+    <div class="row">
+      <strong>Wyniki</strong>
+      <span id="rowsCount" class="badge">0 rekordów</span>
+    </div>
+    <span class="hint">Kliknij nagłówek, aby sortować</span>
   </div>
-  <span class="hint">Kliknij nagłówek, aby sortować</span>
-</div>
-<table id="dataTable" aria-live="polite">
-  <thead id="thead"></thead>
-  <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
-</table>
+  <table id="dataTable" aria-live="polite">
+    <thead id="thead"></thead>
+    <tbody id="tbody">
+      <tr>
+        <td class="empty" colspan="4">Brak danych. Wygeneruj rekordy.</td>
+      </tr>
+    </tbody>
+  </table>
 </section>
 </div>
 </div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+<!-- Faker v9 jako ESM -->
 <script type="module" src="script.js"></script>
 </body>
 </html>
