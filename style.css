@@ -40,18 +40,18 @@ input[type="number"], select{ height:42px; padding:0 12px; border-radius:10px; b
 .tableWrap{ margin-top:18px; background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
 .tableHead{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-bottom:1px solid var(--border); background: linear-gradient(0deg, var(--panel), var(--table-bg)); }
 .hint{ color:var(--muted); font-size:13px; }
-table{ width:100%; border-collapse:collapse; table-layout: fixed; word-wrap: break-word; }
+table{ width:100%; border-collapse:collapse; table-layout: fixed; }
 thead th{ font-weight:600; text-align:left; padding:12px 14px; font-size:14px; border-bottom:1px solid var(--border); user-select:none; cursor:pointer; }
-tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); }
+tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 tbody tr:nth-child(odd){ background:var(--table-row); }
 .empty{ padding:22px; color:var(--muted); text-align:center; }
 .badge{ font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid var(--border); background:var(--table-bg); color:var(--muted); }
 .toast{ position:fixed; right:16px; bottom:16px; background:var(--panel); border:1px solid var(--border); padding:12px 14px; border-radius:12px; box-shadow:var(--shadow); display:none; }
 
-/* Responsywne przewijanie tabeli i nowoczesny scrollbar */
+/* Modern scrollbar */
 .tableWrap > div {
   overflow-x: auto;
-  scrollbar-width: thin; /* Firefox */
+  scrollbar-width: thin;
   scrollbar-color: var(--primary) var(--table-bg);
 }
 
@@ -75,17 +75,32 @@ tbody tr:nth-child(odd){ background:var(--table-row); }
   background-color: var(--primary-2);
 }
 
-/* Zawijanie zawartości komórek, aby nie przewijać poziomo */
-tbody td {
-  white-space: nowrap; /* jeśli chcesz, żeby nr telefonu był w jednej linii */
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* RESPONSIVE TABLE: MOBILE CARD STYLE */
+@media (max-width: 700px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  thead {
+    display: none;
+  }
+  tbody tr {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--table-row);
+  }
+  tbody td {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 12px;
+    text-align: left;
+  }
+  tbody td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--muted);
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
 }
-
-/* Alternatywnie możesz użyć wrap dla długich treści: */
-/*
-tbody td {
-  white-space: normal;
-  word-wrap: break-word;
-}
-*/
