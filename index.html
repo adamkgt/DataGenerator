@@ -114,13 +114,10 @@ tbody tr:nth-child(odd){ background:var(--table-row); }
 
 <div id="toast" class="toast"></div>
 
-<!-- Faker v8.4.1 UMD -->
-<script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@8.4.1/dist/faker.umd.min.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  if (!window.faker) { console.error("Faker nie został poprawnie załadowany!"); return; }
-  const faker = window.faker;
+<script type="module">
+import { faker } from "https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/+esm";
 
+document.addEventListener("DOMContentLoaded", () => {
   const btnGenerate = document.getElementById("generate");
   const btnCopy = document.getElementById("copy");
   const btnExport = document.getElementById("export");
