@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="dark">
-
 <div class="wrap">
 <header>
   <div class="title">
@@ -36,13 +35,13 @@
   <label class="check"><input type="checkbox" id="colPhone" checked /> <span>Telefon</span></label>
   <label class="check"><input type="checkbox" id="colPesel" checked /> <span>PESEL</span></label>
 </div>
-<div class="row">
+<div class="row" style="margin-top:14px">
   <div class="field">
     <label for="count">Liczba rekordów (max 50 w freemium)</label>
     <input id="count" type="number" min="1" max="50" value="10" />
   </div>
   <div class="field">
-    <label for="locale">Lokalizacja</label>
+    <label for="locale">Lokalizacja (wpływa na imiona)</label>
     <select id="locale">
       <option value="pl">Polska (pl)</option>
       <option value="en">Angielski (en)</option>
@@ -54,10 +53,10 @@
     <button id="generate" class="btn primary">GENERUJ DANE</button>
   </div>
 </div>
-<div class="row">
+<div class="row" style="margin-top:8px">
   <button id="copyBtn" class="btn" title="Kopiuj całą tabelę do schowka">📋 Kopiuj</button>
   <button id="csvBtn" class="btn" title="Pobierz CSV">⬇️ Eksport CSV</button>
-  <span class="hint">Freemium: bez zapisu historii, wszystko działa w przeglądarce.</span>
+  <span class="hint">Freemium: bez zapisu historii, bez bazy, wszystko działa w przeglądarce.</span>
 </div>
 </section>
 
@@ -74,6 +73,7 @@
   <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
 </table>
 </section>
+</div>
 </div>
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
