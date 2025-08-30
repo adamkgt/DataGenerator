@@ -133,8 +133,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/dist/faker.umd.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', ()=>{
-  if(!window.faker){ console.error('Faker nie został poprawnie załadowany!'); return; }
-  const faker = window.faker;
+const faker = window.faker || window.Faker;
+if(!faker){ 
+  console.error('Faker nie został poprawnie załadowany!'); 
+  return; 
+}
   const $ = sel => document.querySelector(sel);
   const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.style.display='block'; setTimeout(()=>el.style.display='none',1800); };
   
@@ -266,3 +269,4 @@ document.addEventListener('DOMContentLoaded', ()=>{
 </script>
 </body>
 </html>
+
