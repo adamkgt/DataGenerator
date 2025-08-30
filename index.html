@@ -16,11 +16,11 @@
     --table-bg:#ffffff; --table-row:#f2f4f8; --shadow: 0 10px 30px rgba(16,24,40,.08);
   }
   *{box-sizing:border-box}
-  html,body{height:100%; margin:0; font:15px/1.5 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text);}
-  body { transition: background 0.25s, color 0.25s; }
-  .wrap{max-width:1100px; margin:0 auto; padding:clamp(12px,2vw,24px)}
-  header{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:16px;}
-  .title h1{margin:0; font-size:clamp(22px,3vw,32px);}
+  html,body{height:100%}
+  body{margin:0; font:15px/1.5 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background:var(--bg); color:var(--text);}
+  .wrap{max-width:1100px; margin:0 auto; padding:24px}
+  header{display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:16px;}
+  .title h1{margin:0; font-size: clamp(22px, 3vw, 32px);}
   .title p{margin:6px 0 0; color:var(--muted);}
   .toolbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap;}
   .btn, button, .chip{display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:var(--panel); color:var(--text); padding:10px 14px; border-radius:10px; cursor:pointer; transition:.15s transform, .15s background, .15s border-color;}
@@ -28,30 +28,27 @@
   .btn.primary:hover{ background:var(--primary-2); transform: translateY(-1px); }
   .btn:hover{ transform: translateY(-1px); }
   .btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
-  .panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:clamp(12px,2vw,18px); transition: background 0.25s, border-color 0.25s;}
-  .grid{display:grid; gap:16px; grid-template-columns: 1.1fr 1fr;}
+  .panel{background:var(--panel); border:1px solid var(--border); border-radius:16px; box-shadow:var(--shadow); padding:18px;}
+  .grid{display:grid; gap:16px; grid-template-columns: 1.1fr 1fr; margin-top:16px;}
   @media (max-width: 900px){ .grid{ grid-template-columns: 1fr; } }
   .row{ display:flex; flex-wrap:wrap; gap:12px; align-items:center; }
-  .row .field, .row button{ flex:1 1 180px; min-width: 100px; }
-  .field{ display:flex; flex-direction:column; gap:8px; }
+  .field{ display:flex; flex-direction:column; gap:8px; min-width: 180px; }
   .field label{ color:var(--muted); font-size:13px; }
   .switch{ display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:var(--table-bg);}
   .switch input{ width:44px; height:24px; appearance:none; background:#4b5563; border-radius:999px; position:relative; outline:none; cursor:pointer; transition:.18s background; }
   .switch input:checked{ background:var(--primary); }
   .switch input:before{ content:""; position:absolute; width:18px; height:18px; border-radius:50%; background:#fff; top:3px; left:3px; transition:.18s transform; }
   .switch input:checked:before{ transform: translateX(20px); }
-  input[type="number"], select{ height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--border); background:var(--table-bg); color:var(--text); width:100%;}
+  input[type="number"], select{ height:42px; padding:0 12px; border-radius:10px; border:1px solid var(--border); background:var(--table-bg); color:var(--text);}
   .checks{ display:grid; grid-template-columns: repeat(2, minmax(160px, 1fr)); gap:10px; }
   @media (max-width: 520px){ .checks{ grid-template-columns: 1fr; } }
   .check{ display:flex; gap:10px; align-items:center; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--table-bg);}
-  .check input{ width:22px; height:22px; accent-color:var(--primary); }
-  .tableWrap{ margin-top:18px; background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:auto; transition: background 0.25s, border-color 0.25s; }
+  .check input{ width:18px; height:18px; accent-color:var(--primary); }
+  .tableWrap{ margin-top:18px; background:var(--panel); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
   .tableHead{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-bottom:1px solid var(--border); background: linear-gradient(0deg, var(--panel), var(--table-bg)); }
   .hint{ color:var(--muted); font-size:13px; }
-  table{ width:100%; border-collapse:collapse; min-width:400px; }
-  table thead, table tbody { display: table; width: 100%; }
-  table tbody { display:block; max-height:50vh; overflow:auto; }
-  thead th{ font-weight:600; text-align:left; padding:12px 14px; font-size:14px; border-bottom:1px solid var(--border); user-select:none; cursor:pointer; background:var(--panel); position:sticky; top:0; }
+  table{ width:100%; border-collapse:collapse; }
+  thead th{ font-weight:600; text-align:left; padding:12px 14px; font-size:14px; border-bottom:1px solid var(--border); user-select:none; cursor:pointer; }
   tbody td{ padding:12px 14px; border-bottom:1px solid var(--border); }
   tbody tr:nth-child(odd){ background:var(--table-row); }
   .empty{ padding:22px; color:var(--muted); text-align:center; }
@@ -120,7 +117,7 @@
   </div>
   <span class="hint">Kliknij nagłówek, aby sortować</span>
 </div>
-<div style="overflow:auto">
+<div style="overflow:auto; max-height: 60vh">
   <table id="dataTable" aria-live="polite">
     <thead id="thead"></thead>
     <tbody id="tbody"><tr><td class="empty" colspan="6">Brak danych. Wygeneruj rekordy.</td></tr></tbody>
@@ -132,24 +129,39 @@
 
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
+<!-- Faker v9 jako ESM: importujemy instancje per-locale i wybieramy właściwą w kodzie -->
 <script type="module">
 import { fakerPL, fakerEN, fakerDE } from "https://cdn.jsdelivr.net/npm/@faker-js/faker@9.0.0/+esm";
+
 document.addEventListener('DOMContentLoaded', ()=>{
+  // Guard na wypadek problemu z CDN
   if(!fakerEN || !fakerPL || !fakerDE){ console.error('Faker (ESM) nie został poprawnie załadowany!'); return; }
-  let fx = fakerEN;
+
+  // UŻYWAMY INSTANCJI PER-LOCALE ZAMIAST faker.setLocale(...)
+  let fx = fakerEN; // aktualnie używany faker (domyślnie EN)
+
   const $ = sel => document.querySelector(sel);
   const toast = (msg) => { const el=$('#toast'); el.textContent=msg; el.style.display='block'; setTimeout(()=>el.style.display='none',1800); };
+
   const themeToggle = $('#themeToggle');
   const safeToggle = $('#safeToggle');
   const applyTheme = ()=>document.body.setAttribute('data-theme', themeToggle.checked?'light':'dark');
   themeToggle.addEventListener('change', applyTheme);
   applyTheme();
+
   const thead = $('#thead'), tbody = $('#tbody'), rowsCount = $('#rowsCount');
   const MAX_FREEMIUM = 50;
   let data=[], sortState={key:null, dir:1};
+
+  // wybór instancji faker wg selektora
   const setLocale = (locale)=>{
-    switch(locale){ case 'pl': fx = fakerPL; break; case 'de': fx = fakerDE; break; default: fx = fakerEN; break; }
+    switch(locale){
+      case 'pl': fx = fakerPL; break;
+      case 'de': fx = fakerDE; break;
+      default: fx = fakerEN; break;
+    }
   };
+
   const genFullName = ()=>fx.person.fullName();
   const genEmail = (name)=>{
     if(safeToggle.checked){
@@ -191,6 +203,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const control=(10-(s%10))%10;
     return base+control;
   };
+
   const currentColumns = ()=>{
     const cols=[];
     if($('#colName').checked) cols.push({key:'name', label:'Imię i nazwisko'});
@@ -199,6 +212,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if($('#colPesel').checked) cols.push({key:'pesel', label:'PESEL'});
     return cols.length?cols:[{key:'name', label:'Imię i nazwisko'}];
   };
+
   const renderTable = (cols, rows)=>{
     thead.innerHTML=''; const tr=document.createElement('tr');
     cols.forEach(c=>{ const th=document.createElement('th'); th.textContent=c.label; th.dataset.key=c.key; th.addEventListener('click', ()=>toggleSort(c.key)); tr.appendChild(th); });
@@ -208,6 +222,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     else{ rows.forEach(r=>{ const tr=document.createElement('tr'); cols.forEach(c=>{ const td=document.createElement('td'); td.textContent=r[c.key]??''; tr.appendChild(td); }); tbody.appendChild(tr); }); }
     rowsCount.textContent=`${rows.length} rekordów`;
   };
+
   const toggleSort = (key)=>{
     if(sortState.key===key) sortState.dir*=-1;
     else sortState={key:key, dir:1};
@@ -217,10 +232,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
     });
     renderTable(currentColumns(), data);
   };
+
   $('#generate').addEventListener('click', ()=>{
     let n = Math.min(parseInt($('#count').value||'0',10), MAX_FREEMIUM);
     $('#count').value=n||0; if(!n){toast('Podaj liczbę rekordów (1–50).'); return;}
-    setLocale($('#locale').value);
+    setLocale($('#locale').value);           // ← wybieramy odpowiednią instancję faker
     const cols=currentColumns(); data=[];
     for(let i=0;i<n;i++){
       const name=genFullName(); const row={};
@@ -234,12 +250,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
     }
     sortState={key:null, dir:1}; renderTable(cols,data); toast(`Wygenerowano ${n} rekordów`);
   });
+
   $('#copyBtn').addEventListener('click', async ()=>{
     if(!data.length){ toast('Brak danych do skopiowania.'); return; }
     const cols=currentColumns(); const header=cols.map(c=>c.label).join('\t');
     const text=[header,...data.map(r=>cols.map(c=>r[c.key]??'').join('\t'))].join('\n');
     await navigator.clipboard.writeText(text); toast('Skopiowano do schowka');
   });
+
   $('#csvBtn').addEventListener('click', ()=>{
     if(!data.length){ toast('Brak danych do eksportu.'); return; }
     const cols=currentColumns(); const header=cols.map(c=>`"${c.label}"`).join(',');
