@@ -90,3 +90,15 @@ Nie obejmuje:
 3. **Regression Testing** – powtórka testów po wprowadzeniu zmian
 4. **Exploratory Testing** – nietypowe przypadki użytkownika
 5. **UI/UX & Accessibility** – kontrast, ARIA, obsługa klawiatury, responsywność
+
+---
+
+## 11. Powiązanie z checklistami i przypadkami testowymi
+
+- **Checklisty:** [DataGenerator_Checklist.md](../Checklists/DataGenerator_Checklist.md)
+- **Przypadki testowe:** [DataGenerator_TestCases.md](../TestCases/DataGenerator_TestCases.md)
+- **Scenariusze testowe:** [DataGenerator_Scenarios.md](../Scenarios/DataGenerator_Scenarios.md)
+
+> Każdy scenariusz w Test Plan odpowiada jednemu lub kilku przypadkom testowym/checkliście.  
+> W trakcie wykonywania testów można odznaczać pozycje w checklistach i wypełniać kolumnę `Status` w TestCases.
+
