@@ -42,8 +42,11 @@
   }
   tbody tr:last-child td { border-bottom: none; }
   ol { padding-left: 20px; margin: 0; }
-  .d-flex button { flex:1; }
-  .btn.active { opacity: 0.8; }
+  .d-flex button { flex:1; border-radius:6px; }
+  .btn.active { opacity: 0.85; }
+  .status-label { min-width:50px; font-weight:600; text-align:center; }
+  tr.pass { background-color: #e6f4ea; }
+  tr.fail { background-color: #fdecea; }
   @media (max-width: 768px) {
     td, th { padding: 12px; font-size: 0.85rem; }
   }
@@ -64,51 +67,59 @@
         </tr>
       </thead>
       <tbody>
-        <!-- TC01 -->
+        <!-- Poniżej wiersze TC01–TC17 -->
         <tr>
           <td>TC01</td>
           <td>Strona ładuje się poprawnie</td>
-          <td>1. Otwórz stronę w Chrome, Firefox, Edge, Safari</td>
+          <td>Otwórz stronę w Chrome, Firefox, Edge, Safari</td>
           <td>Strona ładuje się bez błędów, wszystkie elementy widoczne</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC01','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC01','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC02 -->
         <tr>
           <td>TC02</td>
           <td>Widoczność głównych elementów</td>
-          <td>1. Sprawdź pola wyboru, liczba rekordów, przycisk "Generuj"</td>
+          <td>Sprawdź pola wyboru, liczba rekordów, przycisk "Generuj"</td>
           <td>Wszystkie elementy są widoczne i poprawnie rozmieszczone</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC02','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC02','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC03 -->
         <tr>
           <td>TC03</td>
           <td>Responsywność interfejsu</td>
-          <td>1. Otwórz stronę na desktop i mobile</td>
+          <td>Otwórz stronę na desktop i mobile</td>
           <td>Strona wyświetla się poprawnie na różnych urządzeniach</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC03','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC03','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC04 -->
         <tr>
           <td>TC04</td>
           <td>Generowanie danych domyślnie</td>
-          <td>1. Kliknij "Generuj"</td>
+          <td>Kliknij "Generuj"</td>
           <td>Dane zostają wygenerowane poprawnie</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC04','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC04','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC05 -->
         <tr>
           <td>TC05</td>
           <td>Generowanie dla wszystkich kombinacji pól</td>
@@ -119,12 +130,14 @@
             </ol>
           </td>
           <td>Dane generują się zgodnie z wybranymi polami</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC05','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC05','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC06 -->
         <tr>
           <td>TC06</td>
           <td>Limit rekordów</td>
@@ -135,12 +148,14 @@
             </ol>
           </td>
           <td>Aplikacja blokuje generowanie lub pokazuje komunikat</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC06','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC06','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC07 -->
         <tr>
           <td>TC07</td>
           <td>Walidacja pola liczby</td>
@@ -151,12 +166,14 @@
             </ol>
           </td>
           <td>Aplikacja nie generuje danych i wyświetla komunikat</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC07','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC07','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC08 -->
         <tr>
           <td>TC08</td>
           <td>Poprawność imion i nazwisk</td>
@@ -167,119 +184,130 @@
             </ol>
           </td>
           <td>Imiona i nazwiska odpowiadają wybranej lokalizacji</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC08','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC08','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC09 -->
         <tr>
           <td>TC09</td>
           <td>Poprawność e-maili</td>
-          <td>1. Generuj dane zawierające e-maile</td>
+          <td>Generuj dane zawierające e-maile</td>
           <td>Wszystkie e-maile mają prawidłowy format</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC09','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC09','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC10 -->
         <tr>
           <td>TC10</td>
           <td>Poprawność numerów telefonów</td>
-          <td>1. Generuj dane z numerami telefonów</td>
+          <td>Generuj dane z numerami telefonów</td>
           <td>Numery mają odpowiednią długość i format</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC10','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC10','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC11 -->
         <tr>
           <td>TC11</td>
           <td>Poprawność PESEL</td>
-          <td>1. Generuj dane z PESEL</td>
+          <td>Generuj dane z PESEL</td>
           <td>PESEL ma 11 cyfr</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC11','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC11','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC12 -->
         <tr>
           <td>TC12</td>
           <td>Kopiowanie danych</td>
-          <td>1. Kliknij "Kopiuj"</td>
+          <td>Kliknij "Kopiuj"</td>
           <td>Wszystkie dane zostają skopiowane do schowka</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC12','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC12','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC13 -->
         <tr>
           <td>TC13</td>
           <td>Eksport do CSV</td>
-          <td>1. Kliknij "Eksport CSV"</td>
+          <td>Kliknij "Eksport CSV"</td>
           <td>Plik CSV zapisuje wszystkie dane i otwiera się poprawnie</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC13','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC13','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC14 -->
         <tr>
           <td>TC14</td>
           <td>Sortowanie kolumn</td>
-          <td>
-            <ol>
-              <li>Kliknij nagłówek kolumny</li>
-              <li>Kliknij ponownie</li>
-            </ol>
-          </td>
+          <td>Kliknij nagłówek kolumny i ponownie</td>
           <td>Pierwsze kliknięcie sortuje rosnąco, drugie malejąco</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC14','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC14','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC15 -->
         <tr>
           <td>TC15</td>
           <td>Generowanie bez zaznaczonych pól</td>
-          <td>
-            <ol>
-              <li>Odznacz wszystkie pola</li>
-              <li>Kliknij "Generuj"</li>
-            </ol>
-          </td>
+          <td>Odznacz wszystkie pola i kliknij "Generuj"</td>
           <td>Aplikacja pokazuje komunikat lub nie generuje danych</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC15','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC15','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC16 -->
         <tr>
           <td>TC16</td>
           <td>Dostępność – klawiatura</td>
-          <td>1. Poruszaj się po aplikacji używając tylko Tab i Enter</td>
+          <td>Poruszaj się po aplikacji używając tylko Tab i Enter</td>
           <td>Wszystkie elementy można obsługiwać klawiaturą</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC16','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC16','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
-        <!-- TC17 -->
         <tr>
           <td>TC17</td>
           <td>Dostępność – kontrast i ARIA</td>
-          <td>1. Sprawdź etykiety ARIA i kontrast kolorów</td>
+          <td>Sprawdź etykiety ARIA i kontrast kolorów</td>
           <td>Elementy mają poprawne etykiety, kolory są czytelne</td>
-          <td><div class="d-flex gap-2">
+          <td>
+            <div class="d-flex gap-2 align-items-center">
+              <span class="status-label">–</span>
               <button class="btn btn-sm btn-success" onclick="setStatus('TC17','pass',this)">Pass</button>
               <button class="btn btn-sm btn-danger" onclick="setStatus('TC17','fail',this)">Fail</button>
-            </div></td>
+            </div>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -288,22 +316,39 @@
 
 <script>
 function setStatus(id,status,btn){
-  localStorage.setItem(id,status);
+  const row = btn.closest('tr');
   const cell = btn.closest('td');
+  const statusLabel = cell.querySelector('.status-label');
+
+  localStorage.setItem(id,status);
+  
+  // usuń klasy od wszystkich przycisków
   cell.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+  
+  // ustaw aktywny przycisk i kolor wiersza
   if(status==='pass'){
     btn.classList.add('active');
-    cell.style.backgroundColor='#e6f4ea';
-  }else if(status==='fail'){
+    row.classList.add('pass');
+    row.classList.remove('fail');
+    statusLabel.innerText='PASS';
+    statusLabel.style.color='#27ae60';
+  } else if(status==='fail'){
     btn.classList.add('active');
-    cell.style.backgroundColor='#fdecea';
+    row.classList.add('fail');
+    row.classList.remove('pass');
+    statusLabel.innerText='FAIL';
+    statusLabel.style.color='#c0392b';
   }
 }
 
-document.querySelectorAll('td div.d-flex').forEach(div=>{
-  const id = div.closest('tr').children[0].innerText;
-  const status = localStorage.getItem(id);
-  if(status) setStatus(id,status,div.querySelector(`.btn-${status==='pass'?'success':'danger'}`));
+// przy wczytaniu strony przywracamy statusy
+document.querySelectorAll('tbody tr').forEach(row=>{
+  const id = row.children[0].innerText;
+  const storedStatus = localStorage.getItem(id);
+  if(storedStatus){
+    const btn = row.querySelector(`button.btn-${storedStatus==='pass'?'success':'danger'}`);
+    if(btn) setStatus(id,storedStatus,btn);
+  }
 });
 </script>
 </body>
