@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>DataGenerator – Test Cases</title>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th, td {
+    border: 1px solid #333;
+    padding: 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+  input[type=checkbox] {
+    transform: scale(1.2);
+    margin-right: 6px;
+  }
+  ul {
+    margin: 0;
+    padding-left: 20px;
+  }
+</style>
+</head>
+<body>
+
+<h1>DataGenerator – Test Cases (Przypadki Testowe)</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nazwa testu / Test Name</th>
+      <th>Krok / Steps</th>
+      <th>Oczekiwany rezultat / Expected Result</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>TC01</td>
+      <td>Strona ładuje się poprawnie</td>
+      <td>1. Otwórz stronę aplikacji w Chrome, Firefox, Edge, Safari</td>
+      <td>Strona ładuje się bez błędów, widoczne wszystkie elementy</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>TC05</td>
+      <td>Generowanie dla wszystkich kombinacji pól</td>
+      <td>
+        <ol>
+          <li>Wybierz różne kombinacje pól (np. tylko Imię, tylko PESEL, wszystkie pola)</li>
+          <li>Kliknij "Generuj"</li>
+        </ol>
+      </td>
+      <td>Dane generują się zgodnie z wybranymi polami</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>TC06</td>
+      <td>Limit rekordów</td>
+      <td>
+        <ol>
+          <li>Wpisz liczbę większą niż 50 w polu rekordów</li>
+          <li>Kliknij "Generuj"</li>
+        </ol>
+      </td>
+      <td>Aplikacja blokuje generowanie lub pokazuje komunikat</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>TC07</td>
+      <td>Walidacja pola liczby</td>
+      <td>
+        <ol>
+          <li>Wpisz 0, liczbę ujemną lub tekst w polu liczby</li>
+          <li>Kliknij "Generuj"</li>
+        </ol>
+      </td>
+      <td>Aplikacja nie generuje danych i wyświetla komunikat</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <tr>
+      <td>TC14</td>
+      <td>Sortowanie kolumn</td>
+      <td>
+        <ol>
+          <li>Kliknij nagłówek kolumny</li>
+          <li>Kliknij ponownie</li>
+        </ol>
+      </td>
+      <td>Pierwsze kliknięcie sortuje rosnąco, drugie malejąco</td>
+      <td><input type="checkbox"></td>
+    </tr>
+    <!-- Dodaj kolejne test cases w tym samym formacie -->
+  </tbody>
+</table>
+
+</body>
+</html>
