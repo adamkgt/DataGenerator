@@ -20,7 +20,7 @@ Created as part of my QA portfolio – useful for manual testing, form validatio
 
 | Name / Imię        | Email                    | Phone / Telefon | PESEL        |
 |--------------------|--------------------------|-----------------|--------------|
-| Jan Kowalski       | jan.kowalski@example.com | 718 120 668     | 02242040807  |
+| Jan Kowalski       | jan.kowalski@example.com | 718 120 668     | 00000000000  |
 
 ---
 
