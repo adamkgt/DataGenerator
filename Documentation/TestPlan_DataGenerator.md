@@ -95,9 +95,9 @@ Nie obejmuje:
 
 ## 11. Powiązanie z checklistami i przypadkami testowymi
 
-- **Checklisty:** [Checklist.md](../Checklists/DataGenerator_Checklist.md)
-- **Przypadki testowe:** [TestCases.md](../TestCases/DataGenerator_TestCases.md)
-- **Scenariusze testowe:** [Scenarios.md](../Scenarios/TestScenarios.md)
+- **Checklisty:** [Click](../Checklists/DataGenerator_Checklist.md)
+- **Przypadki testowe:** [Click](../TestCases/DataGenerator_TestCases.md)
+- **Scenariusze testowe:** [Click](../Scenarios/TestScenarios.md)
 
 > Każdy scenariusz w Test Plan odpowiada jednemu lub kilku przypadkom testowym/checkliście.  
 > W trakcie wykonywania testów można odznaczać pozycje w checklistach i wypełniać kolumnę `Status` w TestCases.
